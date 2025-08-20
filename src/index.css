@@ -2,39 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* SMO Segurança e Medicina Ocupacional - Design System */
 
 @layer base {
   :root {
+    /* Brand Colors - Verde principal #2AA065 */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 210 20% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 210 20% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 210 20% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Verde SMO */
+    --primary: 141 65% 40%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 141 65% 55%;
+    --primary-dark: 141 65% 30%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Verde mais claro */    
+    --secondary: 141 35% 95%;
+    --secondary-foreground: 141 65% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 30% 96%;
+    --muted-foreground: 210 15% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 141 35% 95%;
+    --accent-foreground: 141 65% 30%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 210 20% 90%;
+    --input: 210 20% 95%;
+    --ring: 141 65% 40%;
+
+    /* Custom Design Tokens */
+    --success: 141 65% 40%;
+    --success-foreground: 0 0% 100%;
+    --warning: 45 90% 55%;
+    --warning-foreground: 45 90% 15%;
+    --info: 210 70% 55%;
+    --info-foreground: 0 0% 100%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(141 65% 40%), hsl(141 65% 55%));
+    --gradient-hero: linear-gradient(135deg, hsl(141 65% 40%), hsl(141 65% 30%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(141 15% 98%));
+
+    /* Shadows */
+    --shadow-card: 0 4px 6px -1px hsl(141 65% 40% / 0.1), 0 2px 4px -1px hsl(141 65% 40% / 0.06);
+    --shadow-primary: 0 10px 15px -3px hsl(141 65% 40% / 0.1), 0 4px 6px -2px hsl(141 65% 40% / 0.05);
+    --shadow-glow: 0 0 0 1px hsl(141 65% 40% / 0.05);
+
+    /* Animation */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 0.75rem;
 
     --radius: 0.5rem;
 
@@ -100,6 +126,84 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  /* SMO Design Components */
+  .smo-card {
+    @apply bg-card rounded-xl shadow-[var(--shadow-card)] border border-border/50;
+  }
+
+  .smo-gradient {
+    background: var(--gradient-primary);
+  }
+
+  .smo-hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .smo-transition {
+    transition: var(--transition-smooth);
+  }
+
+  .smo-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Animation Classes */
+  .fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+
+  .scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
   }
 }
