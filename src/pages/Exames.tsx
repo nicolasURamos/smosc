@@ -1,0 +1,325 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { SmoButton } from "@/components/ui/smo-button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { 
+  ArrowLeft, 
+  Bell, 
+  User, 
+  FileText,
+  Stethoscope,
+  Search,
+  Download,
+  Calendar,
+  Clock,
+  AlertCircle,
+  CheckCircle,
+  Menu,
+  X
+} from "lucide-react";
+
+const Exames = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const exams = [
+    {
+      id: 1,
+      name: "Audiometria",
+      type: "Periódico",
+      status: "Vencido",
+      dueDate: "2024-02-15",
+      lastDate: "2023-02-15",
+      priority: "high",
+      description: "Exame auditivo obrigatório para exposição a ruído"
+    },
+    {
+      id: 2,
+      name: "Exame Clínico Ocupacional",
+      type: "Admissional",
+      status: "Pendente",
+      dueDate: "2024-03-20",
+      lastDate: "2023-03-20",
+      priority: "medium",
+      description: "Avaliação médica completa para admissão"
+    },
+    {
+      id: 3,
+      name: "Acuidade Visual", 
+      type: "Periódico",
+      status: "Em dia",
+      dueDate: "2024-12-15",
+      lastDate: "2024-01-15",
+      priority: "low",
+      description: "Avaliação da capacidade visual"
+    },
+    {
+      id: 4,
+      name: "Exame Toxicológico",
+      type: "Periódico", 
+      status: "Agendado",
+      dueDate: "2024-04-10",
+      lastDate: "2023-04-10",
+      priority: "medium",
+      description: "Detecção de substâncias químicas no organismo"
+    }
+  ];
+
+  const menuItems = [
+    { name: "Dashboard", icon: FileText, href: "/dashboard" },
+    { name: "Histórico", icon: FileText, href: "/history" },
+    { name: "Perfil", icon: User, href: "/profile" },
+    { name: "Notificações", icon: Bell, href: "/notifications" },
+    { name: "Exames", icon: Stethoscope, href: "/exames", current: true },
+  ];
+
+  const filteredExams = exams.filter(exam =>
+    exam.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    exam.type.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Vencido": return "text-destructive";
+      case "Pendente": return "text-warning";
+      case "Agendado": return "text-info";
+      case "Em dia": return "text-success";
+      default: return "text-muted-foreground";
+    }
+  };
+
+  const getStatusBgColor = (status: string) => {
+    switch (status) {
+      case "Vencido": return "bg-destructive/10";
+      case "Pendente": return "bg-warning/10"; 
+      case "Agendado": return "bg-info/10";
+      case "Em dia": return "bg-success/10";
+      default: return "bg-muted/10";
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/10">
+      {/* Mobile Sidebar */}
+      <div className={`fixed inset-0 z-50 lg:hidden ${sidebarOpen ? 'block' : 'hidden'}`}>
+        <div className="fixed inset-0 bg-black/20" onClick={() => setSidebarOpen(false)} />
+        <div className="fixed left-0 top-0 h-full w-64 bg-white smo-card">
+          <div className="flex items-center justify-between p-4 border-b">
+            <div className="flex items-center space-x-2">
+              <img 
+                src="/lovable-uploads/5e9d5601-ee98-4196-b7a2-7427c7d90e3e.png" 
+                alt="SMO Logo" 
+                className="w-8 h-8 object-contain"
+              />
+              <span className="font-semibold text-primary">SMO</span>
+            </div>
+            <button onClick={() => setSidebarOpen(false)}>
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+          <nav className="p-4 space-y-2">
+            {menuItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
+                  item.current 
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                }`}
+              >
+                <item.icon className="h-5 w-5" />
+                <span>{item.name}</span>
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      {/* Header */}
+      <header className="bg-white/80 backdrop-blur-sm border-b border-border/50 sticky top-0 z-40">
+        <div className="flex items-center justify-between px-4 py-4">
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden p-2 rounded-lg hover:bg-accent"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <Link to="/dashboard" className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors">
+              <ArrowLeft className="h-5 w-5" />
+              <span className="font-medium">Voltar</span>
+            </Link>
+            <div className="flex items-center space-x-2">
+              <img 
+                src="/lovable-uploads/5e9d5601-ee98-4196-b7a2-7427c7d90e3e.png" 
+                alt="SMO Logo" 
+                className="w-8 h-8 object-contain"
+              />
+              <span className="font-semibold text-primary text-lg">SMO</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <span className="hidden md:block text-sm text-muted-foreground font-medium">Petrobras S.A.</span>
+            <Link to="/notifications" className="relative p-2 rounded-lg hover:bg-accent">
+              <Bell className="h-5 w-5 text-muted-foreground" />
+              <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive">
+                3
+              </Badge>
+            </Link>
+            <Link to="/profile" className="p-2 rounded-lg hover:bg-accent">
+              <User className="h-5 w-5 text-muted-foreground" />
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex">
+        {/* Desktop Sidebar */}
+        <aside className="hidden lg:block w-64 bg-white/50 backdrop-blur-sm border-r border-border/50 min-h-screen">
+          <nav className="p-6 space-y-2">
+            {menuItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
+                  item.current 
+                    ? 'smo-gradient text-primary-foreground shadow-primary' 
+                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                }`}
+              >
+                <item.icon className="h-5 w-5" />
+                <span className="font-medium">{item.name}</span>
+              </Link>
+            ))}
+          </nav>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 p-6">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="mb-8 fade-in">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold text-foreground mb-2">
+                    Exames Ocupacionais
+                  </h1>
+                  <p className="text-muted-foreground text-lg">
+                    Gerencie seus exames médicos ocupacionais
+                  </p>
+                </div>
+                <div className="flex space-x-2">
+                  <SmoButton variant="outline">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    Agendar Exame
+                  </SmoButton>
+                </div>
+              </div>
+            </div>
+
+            {/* Search */}
+            <div className="mb-6 slide-up">
+              <div className="relative max-w-md">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Input
+                  placeholder="Buscar exames..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 border-border/50"
+                />
+              </div>
+            </div>
+
+            {/* Exam Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredExams.map((exam, index) => (
+                <Card 
+                  key={exam.id} 
+                  className="smo-card hover:shadow-primary transition-all scale-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className={`p-2 rounded-lg ${getStatusBgColor(exam.status)}`}>
+                          <Stethoscope className={`h-5 w-5 ${getStatusColor(exam.status)}`} />
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg">{exam.name}</CardTitle>
+                          <Badge variant="outline" className="mt-1">
+                            {exam.type}
+                          </Badge>
+                        </div>
+                      </div>
+                      <Badge 
+                        className={`${getStatusBgColor(exam.status)} ${getStatusColor(exam.status)} border-0`}
+                      >
+                        {exam.status}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="mb-4">
+                      {exam.description}
+                    </CardDescription>
+                    
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center space-x-2">
+                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-muted-foreground">
+                          Vencimento: {new Date(exam.dueDate).toLocaleDateString('pt-BR')}
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-muted-foreground">
+                          Último: {new Date(exam.lastDate).toLocaleDateString('pt-BR')}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex space-x-2 mt-4">
+                      <SmoButton variant="outline" size="sm" className="flex-1">
+                        <Download className="h-4 w-4 mr-2" />
+                        Download
+                      </SmoButton>
+                      {exam.status === "Pendente" && (
+                        <SmoButton size="sm" className="flex-1">
+                          Agendar
+                        </SmoButton>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Empty State */}
+            {filteredExams.length === 0 && (
+              <Card className="smo-card text-center py-12">
+                <CardContent>
+                  <Stethoscope className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-foreground mb-2">
+                    Nenhum exame encontrado
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    Não encontramos exames com os termos de busca utilizados.
+                  </p>
+                  <SmoButton variant="outline" onClick={() => setSearchTerm("")}>
+                    Limpar Busca
+                  </SmoButton>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default Exames;

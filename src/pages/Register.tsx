@@ -4,7 +4,7 @@ import { SmoButton } from "@/components/ui/smo-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Eye, EyeOff, Mail, Lock, User, CreditCard, ArrowRight, CheckCircle } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, CreditCard, ArrowRight, CheckCircle, Building, Briefcase } from "lucide-react";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -12,6 +12,8 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
+    company: '',
+    position: '',
     cpf: '',
     email: '',
     password: '',
@@ -25,6 +27,14 @@ const Register = () => {
 
     if (!formData.fullName.trim()) {
       newErrors.fullName = 'Nome completo é obrigatório';
+    }
+
+    if (!formData.company.trim()) {
+      newErrors.company = 'Nome da empresa é obrigatório';
+    }
+
+    if (!formData.position.trim()) {
+      newErrors.position = 'Cargo é obrigatório';
     }
 
     if (!formData.cpf.trim()) {
@@ -105,6 +115,54 @@ const Register = () => {
                 {errors.fullName && (
                   <p className="text-destructive text-xs flex items-center">
                     {errors.fullName}
+                  </p>
+                )}
+              </div>
+
+              {/* Company */}
+              <div className="space-y-2">
+                <Label htmlFor="company" className="text-sm font-medium flex items-center">
+                  Nome da Empresa <span className="text-destructive ml-1">*</span>
+                </Label>
+                <div className="relative">
+                  <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input
+                    id="company"
+                    type="text"
+                    placeholder="Digite o nome da empresa"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    className={`pl-10 h-12 border-border/50 focus:border-primary ${errors.company ? 'border-destructive' : ''}`}
+                    required
+                  />
+                </div>
+                {errors.company && (
+                  <p className="text-destructive text-xs flex items-center">
+                    {errors.company}
+                  </p>
+                )}
+              </div>
+
+              {/* Position */}
+              <div className="space-y-2">
+                <Label htmlFor="position" className="text-sm font-medium flex items-center">
+                  Cargo <span className="text-destructive ml-1">*</span>
+                </Label>
+                <div className="relative">
+                  <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input
+                    id="position"
+                    type="text"
+                    placeholder="Digite seu cargo"
+                    value={formData.position}
+                    onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+                    className={`pl-10 h-12 border-border/50 focus:border-primary ${errors.position ? 'border-destructive' : ''}`}
+                    required
+                  />
+                </div>
+                {errors.position && (
+                  <p className="text-destructive text-xs flex items-center">
+                    {errors.position}
                   </p>
                 )}
               </div>

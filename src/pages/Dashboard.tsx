@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SmoButton } from "@/components/ui/smo-button";
 import { Badge } from "@/components/ui/badge";
@@ -15,11 +15,18 @@ import {
   Clock,
   ArrowRight,
   Menu,
-  X
+  X,
+  Shield,
+  Users,
+  Video,
+  Calendar,
+  ClipboardList,
+  Settings
 } from "lucide-react";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const dashboardCards = [
     {
@@ -29,7 +36,7 @@ const Dashboard = () => {
       icon: FileText,
       color: "text-warning",
       bgColor: "bg-warning/10",
-      action: () => {},
+      action: () => navigate("/history"),
     },
     {
       title: "Treinamentos em Aberto",
@@ -38,7 +45,7 @@ const Dashboard = () => {
       icon: BookOpen,
       color: "text-info",
       bgColor: "bg-info/10",
-      action: () => {},
+      action: () => navigate("/treinamentos"),
     },
     {
       title: "Exames Vencendo",
@@ -47,7 +54,7 @@ const Dashboard = () => {
       icon: Stethoscope,
       color: "text-destructive",
       bgColor: "bg-destructive/10",
-      action: () => {},
+      action: () => navigate("/exames"),
     },
     {
       title: "Documentos Assinados",
@@ -56,7 +63,7 @@ const Dashboard = () => {
       icon: CheckCircle,
       color: "text-success",
       bgColor: "bg-success/10",
-      action: () => {},
+      action: () => navigate("/history"),
     },
   ];
 
@@ -89,6 +96,13 @@ const Dashboard = () => {
     { name: "Histórico", icon: History, href: "/history" },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
+    { name: "CIPAA", icon: Users, href: "/cipaa" },
+    { name: "Telemedicina", icon: Video, href: "/telemedicina" },
+    { name: "Exames", icon: Stethoscope, href: "/exames" },
+    { name: "Treinamentos", icon: BookOpen, href: "/treinamentos" },
+    { name: "EPI's", icon: Shield, href: "/epis" },
+    { name: "Procedimentos", icon: ClipboardList, href: "/procedimentos" },
+    { name: "Agendamentos", icon: Calendar, href: "/agendamentos" },
   ];
 
   return (
@@ -150,6 +164,7 @@ const Dashboard = () => {
           </div>
           
           <div className="flex items-center space-x-4">
+            <span className="hidden md:block text-sm text-muted-foreground font-medium">Petrobras S.A.</span>
             <Link to="/notifications" className="relative p-2 rounded-lg hover:bg-accent">
               <Bell className="h-5 w-5 text-muted-foreground" />
               <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive">
@@ -200,7 +215,11 @@ const Dashboard = () => {
             {/* Dashboard Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 slide-up">
               {dashboardCards.map((card, index) => (
-                <Card key={index} className="smo-card hover:shadow-primary transition-all cursor-pointer group">
+                <Card 
+                  key={index} 
+                  className="smo-card hover:shadow-primary transition-all cursor-pointer group"
+                  onClick={card.action}
+                >
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium text-muted-foreground">
                       {card.title}
@@ -221,74 +240,98 @@ const Dashboard = () => {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Recent Activities */}
-              <div className="lg:col-span-2">
-                <Card className="smo-card scale-in">
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Clock className="h-5 w-5 text-primary" />
-                      <span>Atividades Recentes</span>
-                    </CardTitle>
-                    <CardDescription>
-                      Suas últimas atividades no sistema
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {recentActivities.map((activity) => (
-                        <div key={activity.id} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-accent/50 transition-colors">
-                          <div className={`p-2 rounded-full ${
-                            activity.status === 'completed' ? 'bg-success/10' :
-                            activity.status === 'in-progress' ? 'bg-warning/10' :
-                            'bg-info/10'
-                          }`}>
-                            {activity.status === 'completed' && <CheckCircle className="h-4 w-4 text-success" />}
-                            {activity.status === 'in-progress' && <Clock className="h-4 w-4 text-warning" />}
-                            {activity.status === 'scheduled' && <AlertCircle className="h-4 w-4 text-info" />}
-                          </div>
-                          <div className="flex-1">
-                            <p className="font-medium text-foreground">{activity.title}</p>
-                            <p className="text-sm text-muted-foreground">{activity.time}</p>
-                          </div>
-                        </div>
-                      ))}
+            {/* Notifications Section */}
+            <div className="mb-8">
+              <Card className="smo-card scale-in">
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <Bell className="h-5 w-5 text-primary" />
+                    <span>Notificações</span>
+                  </CardTitle>
+                  <CardDescription>
+                    Suas notificações mais recentes
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-4 p-3 rounded-lg hover:bg-accent/50 transition-colors">
+                      <div className="p-2 rounded-full bg-destructive/10">
+                        <FileText className="h-4 w-4 text-destructive" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-foreground">Documento ASO Pendente</p>
+                        <p className="text-sm text-muted-foreground">Você tem um novo documento ASO aguardando assinatura. Prazo: 3 dias.</p>
+                        <p className="text-xs text-muted-foreground mt-1">Há 2 horas</p>
+                      </div>
+                      <Badge variant="destructive" className="text-xs">Urgente</Badge>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Quick Actions */}
-              <div>
-                <Card className="smo-card scale-in">
-                  <CardHeader>
-                    <CardTitle>Ações Rápidas</CardTitle>
-                    <CardDescription>
-                      Acesse rapidamente as principais funcionalidades
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <Link to="/history">
-                      <SmoButton variant="outline" className="w-full justify-between group">
-                        Ver Histórico
-                        <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </SmoButton>
-                    </Link>
-                    <Link to="/profile">
-                      <SmoButton variant="outline" className="w-full justify-between group">
-                        Editar Perfil
-                        <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </SmoButton>
-                    </Link>
+                    <div className="flex items-start space-x-4 p-3 rounded-lg hover:bg-accent/50 transition-colors">
+                      <div className="p-2 rounded-full bg-warning/10">
+                        <Stethoscope className="h-4 w-4 text-warning" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-foreground">Exame Periódico Vencendo</p>
+                        <p className="text-sm text-muted-foreground">Seu exame periódico vence em 15 dias. Agende o mais breve possível.</p>
+                        <p className="text-xs text-muted-foreground mt-1">Há 4 horas</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-4 p-3 rounded-lg hover:bg-accent/50 transition-colors">
+                      <div className="p-2 rounded-full bg-info/10">
+                        <BookOpen className="h-4 w-4 text-info" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-foreground">Treinamento NR-35 Disponível</p>
+                        <p className="text-sm text-muted-foreground">Novo treinamento de Trabalho em Altura disponível para realização.</p>
+                        <p className="text-xs text-muted-foreground mt-1">Há 1 dia</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-6 pt-4 border-t">
                     <Link to="/notifications">
                       <SmoButton variant="outline" className="w-full justify-between group">
-                        Notificações
+                        Ver Todas as Notificações
                         <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                       </SmoButton>
                     </Link>
-                  </CardContent>
-                </Card>
-              </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Recent Activities */}
+            <div>
+              <Card className="smo-card scale-in">
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <Clock className="h-5 w-5 text-primary" />
+                    <span>Atividades Recentes</span>
+                  </CardTitle>
+                  <CardDescription>
+                    Suas últimas atividades no sistema
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {recentActivities.map((activity) => (
+                      <div key={activity.id} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-accent/50 transition-colors">
+                        <div className={`p-2 rounded-full ${
+                          activity.status === 'completed' ? 'bg-success/10' :
+                          activity.status === 'in-progress' ? 'bg-warning/10' :
+                          'bg-info/10'
+                        }`}>
+                          {activity.status === 'completed' && <CheckCircle className="h-4 w-4 text-success" />}
+                          {activity.status === 'in-progress' && <Clock className="h-4 w-4 text-warning" />}
+                          {activity.status === 'scheduled' && <AlertCircle className="h-4 w-4 text-info" />}
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium text-foreground">{activity.title}</p>
+                          <p className="text-sm text-muted-foreground">{activity.time}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </main>
