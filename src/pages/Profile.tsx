@@ -33,7 +33,8 @@ const Profile = () => {
     phone: "(11) 99999-9999",
     address: "São Paulo, SP",
     position: "Técnico de Segurança",
-    department: "Segurança do Trabalho",
+    company: "Nicolini",
+    setor: "Segurança do Trabalho",
     admissionDate: "15/01/2022"
   });
 
@@ -371,10 +372,19 @@ const Profile = () => {
                       <div className="space-y-2">
                         <Label className="text-sm font-medium flex items-center">
                           <Briefcase className="h-4 w-4 mr-2 text-muted-foreground" />
-                          Departamento
+                          Empresa
                         </Label>
                         <p className="text-foreground font-medium py-3 px-4 bg-muted/50 rounded-lg">
-                          {formData.department}
+                          {formData.company}
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium flex items-center">
+                          <Briefcase className="h-4 w-4 mr-2 text-muted-foreground" />
+                          Setor
+                        </Label>
+                        <p className="text-foreground font-medium py-3 px-4 bg-muted/50 rounded-lg">
+                          {formData.setor}
                         </p>
                       </div>
                       <div className="space-y-2">

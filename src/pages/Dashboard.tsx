@@ -164,7 +164,7 @@ const Dashboard = () => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <span className="hidden md:block text-sm text-muted-foreground font-medium">Petrobras S.A.</span>
+            <span className="hidden md:block text-sm text-muted-foreground font-medium">Nicolini</span>
             <Link to="/notifications" className="relative p-2 rounded-lg hover:bg-accent">
               <Bell className="h-5 w-5 text-muted-foreground" />
               <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive">

@@ -9,87 +9,59 @@ import {
   Bell, 
   User, 
   FileText,
-  Shield,
-  Search,
-  Download,
   Calendar,
-  AlertTriangle,
-  CheckCircle,
-  Package,
+  Search,
+  Clock,
+  MapPin,
+  Phone,
   Menu,
   X
 } from "lucide-react";
 
-const EPIs = () => {
+const Agendamentos = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const epis = [
+  const agendamentos = [
     {
       id: 1,
-      name: "Capacete de Segurança",
-      category: "Proteção da Cabeça",
-      status: "Entregue",
-      deliveryDate: "2024-01-15",
-      nextInspection: "2024-04-15",
-      condition: "Bom",
-      ca: "12345",
-      description: "Capacete de segurança classe B para proteção contra impactos"
+      type: "Exame Admissional",
+      date: "2024-03-15",
+      time: "14:30",
+      status: "Agendado",
+      clinic: "Clínica Saúde Ocupacional",
+      address: "Rua das Flores, 123 - Centro",
+      phone: "(11) 3333-4444"
     },
     {
       id: 2,
-      name: "Óculos de Proteção",
-      category: "Proteção Visual",
-      status: "Pendente",
-      deliveryDate: null,
-      nextInspection: null,
-      condition: null,
-      ca: "23456",
-      description: "Óculos de segurança para proteção contra respingos químicos"
+      type: "Exame Periódico",
+      date: "2024-04-20",
+      time: "09:00",
+      status: "Confirmado",
+      clinic: "Medicina do Trabalho São Paulo",
+      address: "Av. Paulista, 1000 - Bela Vista",
+      phone: "(11) 5555-6666"
     },
     {
       id: 3,
-      name: "Luvas de Segurança",
-      category: "Proteção das Mãos",
-      status: "Vencido",
-      deliveryDate: "2023-10-15",
-      nextInspection: "2024-01-15",
-      condition: "Substituir",
-      ca: "34567",
-      description: "Luvas de proteção contra produtos químicos"
+      type: "Audiometria",
+      date: "2024-02-10",
+      time: "16:00",
+      status: "Realizado",
+      clinic: "Centro Médico Industrial",
+      address: "Rua Augusta, 500 - Consolação",
+      phone: "(11) 7777-8888"
     },
     {
       id: 4,
-      name: "Protetor Auricular",
-      category: "Proteção Auditiva", 
-      status: "Entregue",
-      deliveryDate: "2024-02-01",
-      nextInspection: "2024-08-01",
-      condition: "Bom",
-      ca: "45678",
-      description: "Protetor auricular tipo concha para proteção contra ruído"
-    },
-    {
-      id: 5,
-      name: "Calçado de Segurança",
-      category: "Proteção dos Pés",
-      status: "Entregue",
-      deliveryDate: "2023-12-15",
-      nextInspection: "2024-06-15",
-      condition: "Regular",
-      ca: "56789",
-      description: "Calçado de segurança com biqueira de aço"
-    },
-    {
-      id: 6,
-      name: "Cinto de Segurança",
-      category: "Proteção Contra Quedas",
-      status: "Inspecionar",
-      deliveryDate: "2023-11-01",
-      nextInspection: "2024-02-01",
-      condition: "Verificar",
-      ca: "67890",
-      description: "Cinto de segurança tipo paraquedista para trabalho em altura"
+      type: "Exame Demissional",
+      date: "2024-05-05",
+      time: "10:15",
+      status: "Pendente",
+      clinic: "Clínica Saúde Ocupacional",
+      address: "Rua das Flores, 123 - Centro",
+      phone: "(11) 3333-4444"
     }
   ];
 
@@ -98,42 +70,31 @@ const EPIs = () => {
     { name: "Histórico", icon: FileText, href: "/history" },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
-    { name: "EPI's", icon: Shield, href: "/epis", current: true },
+    { name: "Agendamentos", icon: Calendar, href: "/agendamentos", current: true },
   ];
 
-  const filteredEPIs = epis.filter(epi =>
-    epi.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    epi.category.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredAgendamentos = agendamentos.filter(agendamento =>
+    agendamento.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    agendamento.clinic.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Vencido": return "text-destructive";
-      case "Pendente": return "text-warning";
-      case "Inspecionar": return "text-info";
-      case "Entregue": return "text-success";
+      case "Realizado": return "text-success";
+      case "Confirmado": return "text-info";
+      case "Agendado": return "text-warning";
+      case "Pendente": return "text-destructive";
       default: return "text-muted-foreground";
     }
   };
 
   const getStatusBgColor = (status: string) => {
     switch (status) {
-      case "Vencido": return "bg-destructive/10";
-      case "Pendente": return "bg-warning/10";
-      case "Inspecionar": return "bg-info/10";
-      case "Entregue": return "bg-success/10";
+      case "Realizado": return "bg-success/10";
+      case "Confirmado": return "bg-info/10";
+      case "Agendado": return "bg-warning/10";
+      case "Pendente": return "bg-destructive/10";
       default: return "bg-muted/10";
-    }
-  };
-
-  const getConditionColor = (condition: string | null) => {
-    if (!condition) return "text-muted-foreground";
-    switch (condition) {
-      case "Substituir": return "text-destructive";
-      case "Verificar": return "text-warning";
-      case "Regular": return "text-info";
-      case "Bom": return "text-success";
-      default: return "text-muted-foreground";
     }
   };
 
@@ -243,16 +204,16 @@ const EPIs = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className="text-3xl font-bold text-foreground mb-2">
-                    Equipamentos de Proteção Individual
+                    Agendamentos de Exames
                   </h1>
                   <p className="text-muted-foreground text-lg">
-                    Gerencie seus EPIs e mantenha a segurança em dia
+                    Gerencie seus agendamentos médicos ocupacionais
                   </p>
                 </div>
                 <div className="flex space-x-2">
                   <SmoButton variant="outline">
-                    <Package className="h-4 w-4 mr-2" />
-                    Solicitar EPI
+                    <Calendar className="h-4 w-4 mr-2" />
+                    Novo Agendamento
                   </SmoButton>
                 </div>
               </div>
@@ -263,7 +224,7 @@ const EPIs = () => {
               <div className="relative max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
-                  placeholder="Buscar EPIs..."
+                  placeholder="Buscar agendamentos..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10 border-border/50"
@@ -271,85 +232,72 @@ const EPIs = () => {
               </div>
             </div>
 
-            {/* EPI Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredEPIs.map((epi, index) => (
+            {/* Agendamentos Cards */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {filteredAgendamentos.map((agendamento, index) => (
                 <Card 
-                  key={epi.id} 
+                  key={agendamento.id} 
                   className="smo-card hover:shadow-primary transition-all scale-in"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className={`p-2 rounded-lg ${getStatusBgColor(epi.status)}`}>
-                          <Shield className={`h-5 w-5 ${getStatusColor(epi.status)}`} />
-                        </div>
-                        <div>
-                          <CardTitle className="text-lg">{epi.name}</CardTitle>
-                          <Badge variant="outline" className="mt-1">
-                            {epi.category}
-                          </Badge>
-                        </div>
+                      <div>
+                        <CardTitle className="text-lg">{agendamento.type}</CardTitle>
+                        <CardDescription className="mt-1">
+                          {agendamento.clinic}
+                        </CardDescription>
                       </div>
                       <Badge 
-                        className={`${getStatusBgColor(epi.status)} ${getStatusColor(epi.status)} border-0`}
+                        className={`${getStatusBgColor(agendamento.status)} ${getStatusColor(agendamento.status)} border-0`}
                       >
-                        {epi.status}
+                        {agendamento.status}
                       </Badge>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="mb-4">
-                      {epi.description}
-                    </CardDescription>
-                    
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">CA:</span>
-                        <span className="font-medium">{epi.ca}</span>
+                    <div className="space-y-3">
+                      <div className="flex items-center space-x-3">
+                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                        <span className="font-medium">
+                          {new Date(agendamento.date).toLocaleDateString('pt-BR')}
+                        </span>
                       </div>
                       
-                      {epi.deliveryDate && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Entrega:</span>
-                          <span className="font-medium">
-                            {new Date(epi.deliveryDate).toLocaleDateString('pt-BR')}
-                          </span>
-                        </div>
-                      )}
+                      <div className="flex items-center space-x-3">
+                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <span className="font-medium">{agendamento.time}</span>
+                      </div>
                       
-                      {epi.nextInspection && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Próxima Inspeção:</span>
-                          <span className="font-medium">
-                            {new Date(epi.nextInspection).toLocaleDateString('pt-BR')}
-                          </span>
-                        </div>
-                      )}
+                      <div className="flex items-start space-x-3">
+                        <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
+                        <span className="text-sm text-muted-foreground">
+                          {agendamento.address}
+                        </span>
+                      </div>
                       
-                      {epi.condition && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Condição:</span>
-                          <Badge 
-                            variant="outline" 
-                            className={`${getConditionColor(epi.condition)} border-current`}
-                          >
-                            {epi.condition}
-                          </Badge>
-                        </div>
-                      )}
+                      <div className="flex items-center space-x-3">
+                        <Phone className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm text-muted-foreground">
+                          {agendamento.phone}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="flex space-x-2 mt-4">
-                      <SmoButton variant="outline" size="sm" className="flex-1">
-                        <Download className="h-4 w-4 mr-2" />
-                        Termo
-                      </SmoButton>
-                      {epi.deliveryDate && (
+                      {agendamento.status === "Agendado" && (
+                        <SmoButton variant="outline" size="sm" className="flex-1">
+                          Reagendar
+                        </SmoButton>
+                      )}
+                      {agendamento.status === "Pendente" && (
                         <SmoButton size="sm" className="flex-1">
-                          <CheckCircle className="h-4 w-4 mr-2" />
-                          {epi.status === "Entregue" ? "Assinado" : "Assinar"}
+                          Confirmar
+                        </SmoButton>
+                      )}
+                      {agendamento.status === "Realizado" && (
+                        <SmoButton variant="outline" size="sm" className="flex-1">
+                          Ver Resultado
                         </SmoButton>
                       )}
                     </div>
@@ -359,15 +307,15 @@ const EPIs = () => {
             </div>
 
             {/* Empty State */}
-            {filteredEPIs.length === 0 && (
+            {filteredAgendamentos.length === 0 && (
               <Card className="smo-card text-center py-12">
                 <CardContent>
-                  <Shield className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                  <Calendar className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-xl font-semibold text-foreground mb-2">
-                    Nenhum EPI encontrado
+                    Nenhum agendamento encontrado
                   </h3>
                   <p className="text-muted-foreground mb-6">
-                    Não encontramos EPIs com os termos de busca utilizados.
+                    Não encontramos agendamentos com os termos de busca utilizados.
                   </p>
                   <SmoButton variant="outline" onClick={() => setSearchTerm("")}>
                     Limpar Busca
@@ -382,4 +330,4 @@ const EPIs = () => {
   );
 };
 
-export default EPIs;
+export default Agendamentos;

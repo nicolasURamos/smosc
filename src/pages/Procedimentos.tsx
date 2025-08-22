@@ -9,87 +9,70 @@ import {
   Bell, 
   User, 
   FileText,
-  Shield,
+  Settings,
   Search,
   Download,
+  Eye,
   Calendar,
-  AlertTriangle,
-  CheckCircle,
-  Package,
+  Clock,
   Menu,
   X
 } from "lucide-react";
 
-const EPIs = () => {
+const Procedimentos = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const epis = [
+  const procedimentos = [
     {
       id: 1,
-      name: "Capacete de Segurança",
-      category: "Proteção da Cabeça",
-      status: "Entregue",
-      deliveryDate: "2024-01-15",
-      nextInspection: "2024-04-15",
-      condition: "Bom",
-      ca: "12345",
-      description: "Capacete de segurança classe B para proteção contra impactos"
+      name: "PO-001 - Trabalho em Altura",
+      category: "Segurança",
+      version: "v2.1",
+      status: "Vigente",
+      lastUpdate: "2024-01-15",
+      dueDate: "2024-07-15",
+      description: "Procedimento operacional para atividades em altura superior a 2 metros"
     },
     {
       id: 2,
-      name: "Óculos de Proteção",
-      category: "Proteção Visual",
-      status: "Pendente",
-      deliveryDate: null,
-      nextInspection: null,
-      condition: null,
-      ca: "23456",
-      description: "Óculos de segurança para proteção contra respingos químicos"
+      name: "PO-005 - Espaços Confinados",
+      category: "Segurança",
+      version: "v1.3",
+      status: "Revisão",
+      lastUpdate: "2023-12-10",
+      dueDate: "2024-03-10",
+      description: "Procedimentos para entrada e trabalho em espaços confinados"
     },
     {
       id: 3,
-      name: "Luvas de Segurança",
-      category: "Proteção das Mãos",
-      status: "Vencido",
-      deliveryDate: "2023-10-15",
-      nextInspection: "2024-01-15",
-      condition: "Substituir",
-      ca: "34567",
-      description: "Luvas de proteção contra produtos químicos"
+      name: "PO-012 - Uso de EPIs",
+      category: "Proteção Individual",
+      version: "v3.0",
+      status: "Vigente",
+      lastUpdate: "2024-02-01",
+      dueDate: "2025-02-01",
+      description: "Procedimentos para seleção, uso e manutenção de EPIs"
     },
     {
       id: 4,
-      name: "Protetor Auricular",
-      category: "Proteção Auditiva", 
-      status: "Entregue",
-      deliveryDate: "2024-02-01",
-      nextInspection: "2024-08-01",
-      condition: "Bom",
-      ca: "45678",
-      description: "Protetor auricular tipo concha para proteção contra ruído"
+      name: "PO-008 - Primeiros Socorros",
+      category: "Emergência",
+      version: "v2.0",
+      status: "Vigente",
+      lastUpdate: "2023-11-20",
+      dueDate: "2024-11-20",
+      description: "Procedimentos básicos de atendimento de primeiros socorros"
     },
     {
       id: 5,
-      name: "Calçado de Segurança",
-      category: "Proteção dos Pés",
-      status: "Entregue",
-      deliveryDate: "2023-12-15",
-      nextInspection: "2024-06-15",
-      condition: "Regular",
-      ca: "56789",
-      description: "Calçado de segurança com biqueira de aço"
-    },
-    {
-      id: 6,
-      name: "Cinto de Segurança",
-      category: "Proteção Contra Quedas",
-      status: "Inspecionar",
-      deliveryDate: "2023-11-01",
-      nextInspection: "2024-02-01",
-      condition: "Verificar",
-      ca: "67890",
-      description: "Cinto de segurança tipo paraquedista para trabalho em altura"
+      name: "PO-015 - Bloqueio e Etiquetagem",
+      category: "Segurança Elétrica",
+      version: "v1.0",
+      status: "Novo",
+      lastUpdate: "2024-03-01",
+      dueDate: "2025-03-01",
+      description: "Procedimentos para bloqueio e etiquetagem de equipamentos"
     }
   ];
 
@@ -98,42 +81,31 @@ const EPIs = () => {
     { name: "Histórico", icon: FileText, href: "/history" },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
-    { name: "EPI's", icon: Shield, href: "/epis", current: true },
+    { name: "Procedimentos", icon: Settings, href: "/procedimentos", current: true },
   ];
 
-  const filteredEPIs = epis.filter(epi =>
-    epi.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    epi.category.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProcedimentos = procedimentos.filter(procedimento =>
+    procedimento.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    procedimento.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const getStatusColor = (status: string) => {
     switch (status) {
+      case "Vigente": return "text-success";
+      case "Revisão": return "text-warning";
+      case "Novo": return "text-info";
       case "Vencido": return "text-destructive";
-      case "Pendente": return "text-warning";
-      case "Inspecionar": return "text-info";
-      case "Entregue": return "text-success";
       default: return "text-muted-foreground";
     }
   };
 
   const getStatusBgColor = (status: string) => {
     switch (status) {
+      case "Vigente": return "bg-success/10";
+      case "Revisão": return "bg-warning/10";
+      case "Novo": return "bg-info/10";
       case "Vencido": return "bg-destructive/10";
-      case "Pendente": return "bg-warning/10";
-      case "Inspecionar": return "bg-info/10";
-      case "Entregue": return "bg-success/10";
       default: return "bg-muted/10";
-    }
-  };
-
-  const getConditionColor = (condition: string | null) => {
-    if (!condition) return "text-muted-foreground";
-    switch (condition) {
-      case "Substituir": return "text-destructive";
-      case "Verificar": return "text-warning";
-      case "Regular": return "text-info";
-      case "Bom": return "text-success";
-      default: return "text-muted-foreground";
     }
   };
 
@@ -243,17 +215,11 @@ const EPIs = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className="text-3xl font-bold text-foreground mb-2">
-                    Equipamentos de Proteção Individual
+                    Procedimentos Operacionais
                   </h1>
                   <p className="text-muted-foreground text-lg">
-                    Gerencie seus EPIs e mantenha a segurança em dia
+                    Consulte e gerencie os procedimentos operacionais da empresa
                   </p>
-                </div>
-                <div className="flex space-x-2">
-                  <SmoButton variant="outline">
-                    <Package className="h-4 w-4 mr-2" />
-                    Solicitar EPI
-                  </SmoButton>
                 </div>
               </div>
             </div>
@@ -263,7 +229,7 @@ const EPIs = () => {
               <div className="relative max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
-                  placeholder="Buscar EPIs..."
+                  placeholder="Buscar procedimentos..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10 border-border/50"
@@ -271,87 +237,69 @@ const EPIs = () => {
               </div>
             </div>
 
-            {/* EPI Cards */}
+            {/* Procedimentos Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredEPIs.map((epi, index) => (
+              {filteredProcedimentos.map((procedimento, index) => (
                 <Card 
-                  key={epi.id} 
+                  key={procedimento.id} 
                   className="smo-card hover:shadow-primary transition-all scale-in"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
-                        <div className={`p-2 rounded-lg ${getStatusBgColor(epi.status)}`}>
-                          <Shield className={`h-5 w-5 ${getStatusColor(epi.status)}`} />
+                        <div className={`p-2 rounded-lg ${getStatusBgColor(procedimento.status)}`}>
+                          <Settings className={`h-5 w-5 ${getStatusColor(procedimento.status)}`} />
                         </div>
                         <div>
-                          <CardTitle className="text-lg">{epi.name}</CardTitle>
+                          <CardTitle className="text-lg">{procedimento.name}</CardTitle>
                           <Badge variant="outline" className="mt-1">
-                            {epi.category}
+                            {procedimento.category}
                           </Badge>
                         </div>
                       </div>
                       <Badge 
-                        className={`${getStatusBgColor(epi.status)} ${getStatusColor(epi.status)} border-0`}
+                        className={`${getStatusBgColor(procedimento.status)} ${getStatusColor(procedimento.status)} border-0`}
                       >
-                        {epi.status}
+                        {procedimento.status}
                       </Badge>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <CardDescription className="mb-4">
-                      {epi.description}
+                      {procedimento.description}
                     </CardDescription>
                     
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">CA:</span>
-                        <span className="font-medium">{epi.ca}</span>
+                        <span className="text-muted-foreground">Versão:</span>
+                        <span className="font-medium">{procedimento.version}</span>
                       </div>
                       
-                      {epi.deliveryDate && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Entrega:</span>
-                          <span className="font-medium">
-                            {new Date(epi.deliveryDate).toLocaleDateString('pt-BR')}
-                          </span>
-                        </div>
-                      )}
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Atualização:</span>
+                        <span className="font-medium">
+                          {new Date(procedimento.lastUpdate).toLocaleDateString('pt-BR')}
+                        </span>
+                      </div>
                       
-                      {epi.nextInspection && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Próxima Inspeção:</span>
-                          <span className="font-medium">
-                            {new Date(epi.nextInspection).toLocaleDateString('pt-BR')}
-                          </span>
-                        </div>
-                      )}
-                      
-                      {epi.condition && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Condição:</span>
-                          <Badge 
-                            variant="outline" 
-                            className={`${getConditionColor(epi.condition)} border-current`}
-                          >
-                            {epi.condition}
-                          </Badge>
-                        </div>
-                      )}
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Vencimento:</span>
+                        <span className="font-medium">
+                          {new Date(procedimento.dueDate).toLocaleDateString('pt-BR')}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="flex space-x-2 mt-4">
                       <SmoButton variant="outline" size="sm" className="flex-1">
-                        <Download className="h-4 w-4 mr-2" />
-                        Termo
+                        <Eye className="h-4 w-4 mr-2" />
+                        Visualizar
                       </SmoButton>
-                      {epi.deliveryDate && (
-                        <SmoButton size="sm" className="flex-1">
-                          <CheckCircle className="h-4 w-4 mr-2" />
-                          {epi.status === "Entregue" ? "Assinado" : "Assinar"}
-                        </SmoButton>
-                      )}
+                      <SmoButton variant="outline" size="sm" className="flex-1">
+                        <Download className="h-4 w-4 mr-2" />
+                        Download
+                      </SmoButton>
                     </div>
                   </CardContent>
                 </Card>
@@ -359,15 +307,15 @@ const EPIs = () => {
             </div>
 
             {/* Empty State */}
-            {filteredEPIs.length === 0 && (
+            {filteredProcedimentos.length === 0 && (
               <Card className="smo-card text-center py-12">
                 <CardContent>
-                  <Shield className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                  <Settings className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-xl font-semibold text-foreground mb-2">
-                    Nenhum EPI encontrado
+                    Nenhum procedimento encontrado
                   </h3>
                   <p className="text-muted-foreground mb-6">
-                    Não encontramos EPIs com os termos de busca utilizados.
+                    Não encontramos procedimentos com os termos de busca utilizados.
                   </p>
                   <SmoButton variant="outline" onClick={() => setSearchTerm("")}>
                     Limpar Busca
@@ -382,4 +330,4 @@ const EPIs = () => {
   );
 };
 
-export default EPIs;
+export default Procedimentos;

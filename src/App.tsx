@@ -14,6 +14,10 @@ import Notifications from "./pages/Notifications";
 import Exames from "./pages/Exames";
 import Treinamentos from "./pages/Treinamentos";
 import EPIs from "./pages/EPIs";
+import CIPAA from "./pages/CIPAA";
+import Agendamentos from "./pages/Agendamentos";
+import Procedimentos from "./pages/Procedimentos";
+import Telemedicina from "./pages/Telemedicina";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +39,10 @@ const App = () => (
           <Route path="/exames" element={<Exames />} />
           <Route path="/treinamentos" element={<Treinamentos />} />
           <Route path="/epis" element={<EPIs />} />
+          <Route path="/cipaa" element={<CIPAA />} />
+          <Route path="/agendamentos" element={<Agendamentos />} />
+          <Route path="/procedimentos" element={<Procedimentos />} />
+          <Route path="/telemedicina" element={<Telemedicina />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

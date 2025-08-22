@@ -181,7 +181,7 @@ const Treinamentos = () => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <span className="hidden md:block text-sm text-muted-foreground font-medium">Petrobras S.A.</span>
+            <span className="hidden md:block text-sm text-muted-foreground font-medium">Nicolini</span>
             <Link to="/notifications" className="relative p-2 rounded-lg hover:bg-accent">
               <Bell className="h-5 w-5 text-muted-foreground" />
               <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive">
@@ -279,20 +279,6 @@ const Treinamentos = () => {
                       {training.description}
                     </CardDescription>
                     
-                    {training.status === "Em Andamento" && (
-                      <div className="mb-4">
-                        <div className="flex items-center justify-between text-sm mb-1">
-                          <span className="text-muted-foreground">Progresso</span>
-                          <span className="font-medium">{training.progress}%</span>
-                        </div>
-                        <div className="w-full bg-muted rounded-full h-2">
-                          <div 
-                            className="smo-gradient h-2 rounded-full transition-all" 
-                            style={{ width: `${training.progress}%` }}
-                          />
-                        </div>
-                      </div>
-                    )}
                     
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center space-x-2">
@@ -304,7 +290,7 @@ const Treinamentos = () => {
                       <div className="flex items-center space-x-2">
                         <Calendar className="h-4 w-4 text-muted-foreground" />
                         <span className="text-muted-foreground">
-                          Prazo: {new Date(training.dueDate).toLocaleDateString('pt-BR')}
+                          Prazo: {new Date(training.dueDate).toLocaleDateString('pt-BR')} às 14:00
                         </span>
                       </div>
                     </div>
@@ -314,24 +300,6 @@ const Treinamentos = () => {
                         <SmoButton variant="outline" size="sm" className="flex-1">
                           <Download className="h-4 w-4 mr-2" />
                           Certificado
-                        </SmoButton>
-                      )}
-                      {(training.status === "Disponível" || training.status === "Pendente") && (
-                        <SmoButton size="sm" className="flex-1">
-                          <Play className="h-4 w-4 mr-2" />
-                          Iniciar
-                        </SmoButton>
-                      )}
-                      {training.status === "Em Andamento" && (
-                        <SmoButton size="sm" className="flex-1">
-                          <Play className="h-4 w-4 mr-2" />
-                          Continuar
-                        </SmoButton>
-                      )}
-                      {training.status === "Vencido" && (
-                        <SmoButton variant="destructive" size="sm" className="flex-1">
-                          <AlertCircle className="h-4 w-4 mr-2" />
-                          Refazer
                         </SmoButton>
                       )}
                     </div>
