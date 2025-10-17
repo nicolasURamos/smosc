@@ -17,7 +17,13 @@ import {
   CheckCircle,
   Package,
   Menu,
-  X
+  X,
+  History,
+  Users,
+  Video,
+  ClipboardList,
+  Stethoscope,
+  BookOpen
 } from "lucide-react";
 
 const EPIs = () => {
@@ -98,7 +104,13 @@ const EPIs = () => {
     { name: "Histórico", icon: FileText, href: "/history" },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
+    { name: "CIPAA", icon: FileText, href: "/cipaa" },
+    { name: "Telemedicina", icon: FileText, href: "/telemedicina" },
+    { name: "Exames", icon: FileText, href: "/exames" },
+    { name: "Treinamentos", icon: FileText, href: "/treinamentos" },
     { name: "EPI's", icon: Shield, href: "/epis", current: true },
+    { name: "Procedimentos", icon: FileText, href: "/procedimentos" },
+    { name: "Agendamentos", icon: FileText, href: "/agendamentos" },
   ];
 
   const filteredEPIs = epis.filter(epi =>

@@ -14,7 +14,14 @@ import {
   ChevronLeft,
   ChevronRight,
   Menu,
-  X
+  X,
+  History,
+  Users,
+  ClipboardList,
+  Stethoscope,
+  BookOpen,
+  Shield,
+  Settings
 } from "lucide-react";
 
 const Telemedicina = () => {
@@ -26,7 +33,13 @@ const Telemedicina = () => {
     { name: "Histórico", icon: FileText, href: "/history" },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
+    { name: "CIPAA", icon: FileText, href: "/cipaa" },
     { name: "Telemedicina", icon: Video, href: "/telemedicina", current: true },
+    { name: "Exames", icon: FileText, href: "/exames" },
+    { name: "Treinamentos", icon: FileText, href: "/treinamentos" },
+    { name: "EPI's", icon: FileText, href: "/epis" },
+    { name: "Procedimentos", icon: FileText, href: "/procedimentos" },
+    { name: "Agendamentos", icon: FileText, href: "/agendamentos" },
   ];
 
   // Gerar datas disponíveis e indisponíveis para o mês atual

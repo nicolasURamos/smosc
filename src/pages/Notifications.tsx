@@ -8,14 +8,20 @@ import {
   Bell, 
   User, 
   FileText,
-  AlertCircle,
-  CheckCircle,
-  Clock,
-  BookOpen,
+  History,
+  Trash2,
+  Users,
+  Video,
+  Calendar,
+  ClipboardList,
   Stethoscope,
-  X,
+  BookOpen,
+  Shield,
   Menu,
-  Trash2
+  X,
+  CheckCircle,
+  AlertCircle,
+  Clock
 } from "lucide-react";
 
 const Notifications = () => {
@@ -100,6 +106,13 @@ const Notifications = () => {
     { name: "Histórico", icon: FileText, href: "/history" },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications", current: true },
+    { name: "CIPAA", icon: User, href: "/cipaa" },
+    { name: "Telemedicina", icon: FileText, href: "/telemedicina" },
+    { name: "Exames", icon: FileText, href: "/exames" },
+    { name: "Treinamentos", icon: FileText, href: "/treinamentos" },
+    { name: "EPI's", icon: FileText, href: "/epis" },
+    { name: "Procedimentos", icon: FileText, href: "/procedimentos" },
+    { name: "Agendamentos", icon: FileText, href: "/agendamentos" },
   ];
 
   const markAsRead = (id: number) => {

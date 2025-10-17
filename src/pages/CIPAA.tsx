@@ -8,7 +8,16 @@ import {
   FileText,
   Clock,
   Menu,
-  X
+  X,
+  History,
+  Users,
+  Video,
+  Calendar,
+  ClipboardList,
+  Stethoscope,
+  BookOpen,
+  Shield,
+  Settings
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -21,6 +30,12 @@ const CIPAA = () => {
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
     { name: "CIPAA", icon: FileText, href: "/cipaa", current: true },
+    { name: "Telemedicina", icon: FileText, href: "/telemedicina" },
+    { name: "Exames", icon: FileText, href: "/exames" },
+    { name: "Treinamentos", icon: FileText, href: "/treinamentos" },
+    { name: "EPI's", icon: FileText, href: "/epis" },
+    { name: "Procedimentos", icon: FileText, href: "/procedimentos" },
+    { name: "Agendamentos", icon: FileText, href: "/agendamentos" },
   ];
 
   return (

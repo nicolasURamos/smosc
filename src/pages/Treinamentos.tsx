@@ -18,7 +18,13 @@ import {
   CheckCircle,
   AlertCircle,
   Menu,
-  X
+  X,
+  History,
+  Users,
+  Video,
+  ClipboardList,
+  Stethoscope,
+  Shield
 } from "lucide-react";
 
 const Treinamentos = () => {
@@ -88,7 +94,13 @@ const Treinamentos = () => {
     { name: "Histórico", icon: FileText, href: "/history" },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
+    { name: "CIPAA", icon: FileText, href: "/cipaa" },
+    { name: "Telemedicina", icon: FileText, href: "/telemedicina" },
+    { name: "Exames", icon: FileText, href: "/exames" },
     { name: "Treinamentos", icon: BookOpen, href: "/treinamentos", current: true },
+    { name: "EPI's", icon: FileText, href: "/epis" },
+    { name: "Procedimentos", icon: FileText, href: "/procedimentos" },
+    { name: "Agendamentos", icon: FileText, href: "/agendamentos" },
   ];
 
   const filteredTrainings = trainings.filter(training =>

@@ -15,7 +15,14 @@ import {
   User,
   Menu,
   X,
-  Bell
+  Bell,
+  History as HistoryIcon,
+  Users,
+  Video,
+  ClipboardList,
+  Stethoscope,
+  BookOpen,
+  Shield
 } from "lucide-react";
 
 const History = () => {
@@ -87,9 +94,16 @@ const History = () => {
 
   const menuItems = [
     { name: "Dashboard", icon: FileText, href: "/dashboard" },
-    { name: "Histórico", icon: FileText, href: "/history", current: true },
+    { name: "Histórico", icon: HistoryIcon, href: "/history", current: true },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
+    { name: "CIPAA", icon: FileText, href: "/cipaa" },
+    { name: "Telemedicina", icon: FileText, href: "/telemedicina" },
+    { name: "Exames", icon: FileText, href: "/exames" },
+    { name: "Treinamentos", icon: FileText, href: "/treinamentos" },
+    { name: "EPI's", icon: FileText, href: "/epis" },
+    { name: "Procedimentos", icon: FileText, href: "/procedimentos" },
+    { name: "Agendamentos", icon: FileText, href: "/agendamentos" },
   ];
 
   return (
