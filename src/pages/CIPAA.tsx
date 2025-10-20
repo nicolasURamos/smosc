@@ -26,16 +26,16 @@ const CIPAA = () => {
 
   const menuItems = [
     { name: "Dashboard", icon: FileText, href: "/dashboard" },
-    { name: "Histórico", icon: FileText, href: "/history" },
+    { name: "Histórico", icon: History, href: "/history" },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
-    { name: "CIPAA", icon: FileText, href: "/cipaa", current: true },
-    { name: "Telemedicina", icon: FileText, href: "/telemedicina" },
-    { name: "Exames", icon: FileText, href: "/exames" },
-    { name: "Treinamentos", icon: FileText, href: "/treinamentos" },
-    { name: "EPI's", icon: FileText, href: "/epis" },
-    { name: "Procedimentos", icon: FileText, href: "/procedimentos" },
-    { name: "Agendamentos", icon: FileText, href: "/agendamentos" },
+    { name: "CIPAA", icon: Users, href: "/cipaa", current: true },
+    { name: "Telemedicina", icon: Video, href: "/telemedicina" },
+    { name: "Exames", icon: Stethoscope, href: "/exames" },
+    { name: "Treinamentos", icon: BookOpen, href: "/treinamentos" },
+    { name: "EPI's", icon: Shield, href: "/epis" },
+    { name: "Procedimentos", icon: ClipboardList, href: "/procedimentos" },
+    { name: "Agendamentos", icon: Calendar, href: "/agendamentos" },
   ];
 
   return (

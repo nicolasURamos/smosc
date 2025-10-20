@@ -97,13 +97,13 @@ const History = () => {
     { name: "Histórico", icon: HistoryIcon, href: "/history", current: true },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
-    { name: "CIPAA", icon: FileText, href: "/cipaa" },
-    { name: "Telemedicina", icon: FileText, href: "/telemedicina" },
-    { name: "Exames", icon: FileText, href: "/exames" },
-    { name: "Treinamentos", icon: FileText, href: "/treinamentos" },
-    { name: "EPI's", icon: FileText, href: "/epis" },
-    { name: "Procedimentos", icon: FileText, href: "/procedimentos" },
-    { name: "Agendamentos", icon: FileText, href: "/agendamentos" },
+    { name: "CIPAA", icon: Users, href: "/cipaa" },
+    { name: "Telemedicina", icon: Video, href: "/telemedicina" },
+    { name: "Exames", icon: Stethoscope, href: "/exames" },
+    { name: "Treinamentos", icon: BookOpen, href: "/treinamentos" },
+    { name: "EPI's", icon: Shield, href: "/epis" },
+    { name: "Procedimentos", icon: ClipboardList, href: "/procedimentos" },
+    { name: "Agendamentos", icon: Calendar, href: "/agendamentos" },
   ];
 
   return (
@@ -169,6 +169,7 @@ const History = () => {
           </div>
           
           <div className="flex items-center space-x-4">
+            <span className="hidden md:block text-sm text-muted-foreground font-medium">Nicolini</span>
             <Link to="/notifications" className="relative p-2 rounded-lg hover:bg-accent">
               <Bell className="h-5 w-5 text-muted-foreground" />
               <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive">

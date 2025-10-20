@@ -30,16 +30,16 @@ const Telemedicina = () => {
 
   const menuItems = [
     { name: "Dashboard", icon: FileText, href: "/dashboard" },
-    { name: "Histórico", icon: FileText, href: "/history" },
+    { name: "Histórico", icon: History, href: "/history" },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
-    { name: "CIPAA", icon: FileText, href: "/cipaa" },
+    { name: "CIPAA", icon: Users, href: "/cipaa" },
     { name: "Telemedicina", icon: Video, href: "/telemedicina", current: true },
-    { name: "Exames", icon: FileText, href: "/exames" },
-    { name: "Treinamentos", icon: FileText, href: "/treinamentos" },
-    { name: "EPI's", icon: FileText, href: "/epis" },
-    { name: "Procedimentos", icon: FileText, href: "/procedimentos" },
-    { name: "Agendamentos", icon: FileText, href: "/agendamentos" },
+    { name: "Exames", icon: Stethoscope, href: "/exames" },
+    { name: "Treinamentos", icon: BookOpen, href: "/treinamentos" },
+    { name: "EPI's", icon: Shield, href: "/epis" },
+    { name: "Procedimentos", icon: ClipboardList, href: "/procedimentos" },
+    { name: "Agendamentos", icon: Calendar, href: "/agendamentos" },
   ];
 
   // Gerar datas disponíveis e indisponíveis para o mês atual

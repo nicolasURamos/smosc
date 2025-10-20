@@ -91,16 +91,16 @@ const Treinamentos = () => {
 
   const menuItems = [
     { name: "Dashboard", icon: FileText, href: "/dashboard" },
-    { name: "Histórico", icon: FileText, href: "/history" },
+    { name: "Histórico", icon: History, href: "/history" },
     { name: "Perfil", icon: User, href: "/profile" },
     { name: "Notificações", icon: Bell, href: "/notifications" },
-    { name: "CIPAA", icon: FileText, href: "/cipaa" },
-    { name: "Telemedicina", icon: FileText, href: "/telemedicina" },
-    { name: "Exames", icon: FileText, href: "/exames" },
+    { name: "CIPAA", icon: Users, href: "/cipaa" },
+    { name: "Telemedicina", icon: Video, href: "/telemedicina" },
+    { name: "Exames", icon: Stethoscope, href: "/exames" },
     { name: "Treinamentos", icon: BookOpen, href: "/treinamentos", current: true },
-    { name: "EPI's", icon: FileText, href: "/epis" },
-    { name: "Procedimentos", icon: FileText, href: "/procedimentos" },
-    { name: "Agendamentos", icon: FileText, href: "/agendamentos" },
+    { name: "EPI's", icon: Shield, href: "/epis" },
+    { name: "Procedimentos", icon: ClipboardList, href: "/procedimentos" },
+    { name: "Agendamentos", icon: Calendar, href: "/agendamentos" },
   ];
 
   const filteredTrainings = trainings.filter(training =>
