@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { SmoButton } from "@/components/ui/smo-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,8 +9,10 @@ import { Eye, EyeOff, Mail, Lock, User, CreditCard, ArrowRight, CheckCircle, Bui
 
 const Register = () => {
   const navigate = useNavigate();
+  const { signUp } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     company: '',
@@ -61,11 +64,24 @@ const Register = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      // Simulação de cadastro
-      navigate("/login");
+      setIsLoading(true);
+      
+      try {
+        await signUp(formData.email, formData.password, {
+          full_name: formData.fullName,
+          company: formData.company,
+          position: formData.position,
+          cpf: formData.cpf,
+        });
+        navigate("/dashboard");
+      } catch (error) {
+        // Erro já tratado no AuthContext
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -283,9 +299,10 @@ const Register = () => {
                 variant="hero" 
                 size="lg" 
                 className="w-full group mt-6"
+                disabled={isLoading}
               >
-                Criar Conta
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                {isLoading ? "Criando conta..." : "Criar Conta"}
+                {!isLoading && <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />}
               </SmoButton>
             </form>
 

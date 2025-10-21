@@ -4,11 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Mail } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const { resetPassword } = useAuth();
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
@@ -17,15 +17,14 @@ const ForgotPassword = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simular envio de email (será integrado com Supabase na Fase 3)
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await resetPassword(email);
       setEmailSent(true);
-      toast({
-        title: "Email enviado!",
-        description: "Verifique sua caixa de entrada para redefinir sua senha.",
-      });
-    }, 1500);
+    } catch (error) {
+      // Erro já tratado no AuthContext
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (emailSent) {
