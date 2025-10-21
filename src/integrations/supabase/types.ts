@@ -14,16 +14,322 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      appointments: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          location: string | null
+          scheduled_date: string
+          status: Database["public"]["Enums"]["appointment_status"]
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          scheduled_date: string
+          status?: Database["public"]["Enums"]["appointment_status"]
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          scheduled_date?: string
+          status?: Database["public"]["Enums"]["appointment_status"]
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      epis: {
+        Row: {
+          created_at: string | null
+          expiry_date: string
+          id: string
+          issue_date: string
+          name: string
+          signature_url: string | null
+          signed_at: string | null
+          status: Database["public"]["Enums"]["epi_status"]
+          term_url: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          expiry_date: string
+          id?: string
+          issue_date: string
+          name: string
+          signature_url?: string | null
+          signed_at?: string | null
+          status?: Database["public"]["Enums"]["epi_status"]
+          term_url?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          expiry_date?: string
+          id?: string
+          issue_date?: string
+          name?: string
+          signature_url?: string | null
+          signed_at?: string | null
+          status?: Database["public"]["Enums"]["epi_status"]
+          term_url?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      exams: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          result_url: string | null
+          scheduled_date: string | null
+          status: Database["public"]["Enums"]["exam_status"]
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          result_url?: string | null
+          scheduled_date?: string | null
+          status?: Database["public"]["Enums"]["exam_status"]
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          result_url?: string | null
+          scheduled_date?: string | null
+          status?: Database["public"]["Enums"]["exam_status"]
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string | null
+          id: string
+          message: string
+          read: boolean | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          message: string
+          read?: boolean | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          message?: string
+          read?: boolean | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      procedures: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string | null
+          document_url: string | null
+          effective_date: string
+          id: string
+          name: string
+          review_date: string | null
+          status: string
+          version: string
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          description?: string | null
+          document_url?: string | null
+          effective_date: string
+          id?: string
+          name: string
+          review_date?: string | null
+          status?: string
+          version: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string | null
+          document_url?: string | null
+          effective_date?: string
+          id?: string
+          name?: string
+          review_date?: string | null
+          status?: string
+          version?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          company: string
+          cpf: string
+          created_at: string | null
+          full_name: string
+          id: string
+          position: string
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          company: string
+          cpf: string
+          created_at?: string | null
+          full_name: string
+          id: string
+          position: string
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          company?: string
+          cpf?: string
+          created_at?: string | null
+          full_name?: string
+          id?: string
+          position?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      telemedicine_slots: {
+        Row: {
+          available: boolean | null
+          created_at: string | null
+          date: string
+          id: string
+          time: string
+          user_id: string | null
+        }
+        Insert: {
+          available?: boolean | null
+          created_at?: string | null
+          date: string
+          id?: string
+          time: string
+          user_id?: string | null
+        }
+        Update: {
+          available?: boolean | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          time?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      trainings: {
+        Row: {
+          category: string
+          certificate_url: string | null
+          created_at: string | null
+          due_date: string
+          duration: number
+          id: string
+          name: string
+          scheduled_time: string | null
+          status: Database["public"]["Enums"]["training_status"]
+          user_id: string
+        }
+        Insert: {
+          category: string
+          certificate_url?: string | null
+          created_at?: string | null
+          due_date: string
+          duration: number
+          id?: string
+          name: string
+          scheduled_time?: string | null
+          status?: Database["public"]["Enums"]["training_status"]
+          user_id: string
+        }
+        Update: {
+          category?: string
+          certificate_url?: string | null
+          created_at?: string | null
+          due_date?: string
+          duration?: number
+          id?: string
+          name?: string
+          scheduled_time?: string | null
+          status?: Database["public"]["Enums"]["training_status"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user" | "manager"
+      appointment_status: "scheduled" | "confirmed" | "completed" | "cancelled"
+      epi_status: "active" | "expired" | "pending_signature"
+      exam_status: "pending" | "scheduled" | "completed" | "cancelled"
+      training_status: "not_started" | "in_progress" | "completed" | "expired"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +456,12 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user", "manager"],
+      appointment_status: ["scheduled", "confirmed", "completed", "cancelled"],
+      epi_status: ["active", "expired", "pending_signature"],
+      exam_status: ["pending", "scheduled", "completed", "cancelled"],
+      training_status: ["not_started", "in_progress", "completed", "expired"],
+    },
   },
 } as const
