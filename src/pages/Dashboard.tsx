@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SmoButton } from "@/components/ui/smo-button";
 import { Badge } from "@/components/ui/badge";
@@ -26,7 +28,27 @@ import {
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userName, setUserName] = useState("Usuário");
+  const { user } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (!user) return;
+      
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .single();
+      
+      if (data && !error) {
+        setUserName(data.full_name);
+      }
+    };
+    
+    fetchUserProfile();
+  }, [user]);
 
   const dashboardCards = [
     {
@@ -205,7 +227,7 @@ const Dashboard = () => {
             {/* Welcome Header */}
             <div className="mb-8 fade-in">
               <h1 className="text-3xl font-bold text-foreground mb-2">
-                Bem-vindo, João Silva
+                Bem-vindo, {userName}
               </h1>
               <p className="text-muted-foreground text-lg">
                 Aqui está um resumo das suas atividades de segurança ocupacional
