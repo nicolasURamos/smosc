@@ -68,9 +68,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         description: "Bem-vindo de volta ao SMO Nicolini.",
       });
     } catch (error: any) {
+      // Log detailed error for debugging, but show generic message to user
+      console.error('[Auth] Login error:', error.code, error.message);
       toast({
         title: "Erro no login",
-        description: error.message || "Credenciais inválidas. Tente novamente.",
+        description: "Email ou senha inválidos. Verifique suas credenciais e tente novamente.",
         variant: "destructive",
       });
       throw error;
@@ -112,9 +114,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         description: "Sua conta foi criada com sucesso.",
       });
     } catch (error: any) {
+      // Log detailed error for debugging, but show generic message to user
+      console.error('[Auth] Signup error:', error.code, error.message);
       toast({
         title: "Erro no cadastro",
-        description: error.message || "Não foi possível criar sua conta.",
+        description: "Não foi possível criar sua conta. Verifique os dados e tente novamente.",
         variant: "destructive",
       });
       throw error;
@@ -148,15 +152,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (error) throw error;
 
+      // Generic message - don't reveal if email exists or not
       toast({
-        title: "Email enviado!",
-        description: "Verifique sua caixa de entrada.",
+        title: "Solicitação enviada",
+        description: "Se o email existir em nosso sistema, você receberá instruções de recuperação.",
       });
     } catch (error: any) {
+      // Log detailed error for debugging, but show generic message to user
+      console.error('[Auth] Password reset error:', error.code, error.message);
       toast({
-        title: "Erro",
-        description: error.message,
-        variant: "destructive",
+        title: "Solicitação enviada",
+        description: "Se o email existir em nosso sistema, você receberá instruções de recuperação.",
       });
       throw error;
     }

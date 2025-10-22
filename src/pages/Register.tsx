@@ -1,11 +1,45 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { z } from "zod";
 import { useAuth } from "@/contexts/AuthContext";
 import { SmoButton } from "@/components/ui/smo-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Eye, EyeOff, Mail, Lock, User, CreditCard, ArrowRight, CheckCircle, Building, Briefcase } from "lucide-react";
+
+// Comprehensive validation schema for security
+const registerSchema = z.object({
+  fullName: z.string()
+    .trim()
+    .min(3, 'Nome deve ter no mínimo 3 caracteres')
+    .max(100, 'Nome muito longo (máximo 100 caracteres)'),
+  company: z.string()
+    .trim()
+    .min(2, 'Nome da empresa deve ter no mínimo 2 caracteres')
+    .max(100, 'Nome da empresa muito longo (máximo 100 caracteres)'),
+  position: z.string()
+    .trim()
+    .min(2, 'Cargo deve ter no mínimo 2 caracteres')
+    .max(100, 'Cargo muito longo (máximo 100 caracteres)'),
+  cpf: z.string()
+    .trim()
+    .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, 'CPF inválido (formato: 000.000.000-00)'),
+  email: z.string()
+    .trim()
+    .email('Email inválido')
+    .max(255, 'Email muito longo (máximo 255 caracteres)'),
+  password: z.string()
+    .min(8, 'Senha deve ter no mínimo 8 caracteres')
+    .max(128, 'Senha muito longa (máximo 128 caracteres)')
+    .regex(/[A-Z]/, 'Senha deve conter pelo menos uma letra maiúscula')
+    .regex(/[a-z]/, 'Senha deve conter pelo menos uma letra minúscula')
+    .regex(/[0-9]/, 'Senha deve conter pelo menos um número'),
+  confirmPassword: z.string()
+}).refine(data => data.password === data.confirmPassword, {
+  message: 'Senhas não conferem',
+  path: ['confirmPassword']
+});
 
 const Register = () => {
   const navigate = useNavigate();
@@ -26,42 +60,22 @@ const Register = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
-
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Nome completo é obrigatório';
+    const result = registerSchema.safeParse(formData);
+    
+    if (!result.success) {
+      const fieldErrors: { [key: string]: string } = {};
+      result.error.errors.forEach((error) => {
+        const field = error.path[0] as string;
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = error.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return false;
     }
-
-    if (!formData.company.trim()) {
-      newErrors.company = 'Nome da empresa é obrigatório';
-    }
-
-    if (!formData.position.trim()) {
-      newErrors.position = 'Cargo é obrigatório';
-    }
-
-    if (!formData.cpf.trim()) {
-      newErrors.cpf = 'CPF é obrigatório';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'E-mail é obrigatório';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'E-mail inválido';
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'Senha é obrigatória';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Senha deve ter pelo menos 6 caracteres';
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Senhas não coincidem';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    
+    setErrors({});
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
