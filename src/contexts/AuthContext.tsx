@@ -3,6 +3,15 @@ import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
+// Helper function to hash CPF (LGPD compliance)
+const hashCPF = async (cpf: string): Promise<string> => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(cpf);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+};
+
 interface AuthContextType {
   user: User | null;
   session: Session | null;
@@ -79,11 +88,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   ) => {
     try {
+      // Hash CPF before storing (LGPD compliance)
+      const cpfHash = await hashCPF(userData.cpf);
+      
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          data: userData,
+          data: {
+            full_name: userData.full_name,
+            company: userData.company,
+            position: userData.position,
+            cpf_hash: cpfHash,
+          },
           emailRedirectTo: `${window.location.origin}/dashboard`,
         },
       });
